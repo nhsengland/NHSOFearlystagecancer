@@ -1,13 +1,20 @@
 ---
 title: "How we measure the Deprivation Gap"
 subtitle: "Calculating the Slope Index of Inequality"
-output: html
-toc: true
+output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{How we measure the Deprivation Gap}
-  %\VignetteEngine{quarto::html}
+  %\VignetteIndexEntry{explain-SII}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
 
 ```{r}
 #| echo: false
@@ -15,6 +22,7 @@ vignette: >
 #| message: false
 
 library(ggplot2)
+library(NHSOFearlystagecancer)
 ```
 
 

@@ -46,8 +46,8 @@ else in input \code{ed_data}}
 coefficients of \code{sii_model}}
 \item{sii}{\link[=numeric]{Numeric}: SII value, taken as the gradient of the \code{sii_model}}
 \item{sii_std_err}{\link[=numeric]{Numeric}: Standard error of \code{sii}}
-\item{sii_lci_95}{\link[=numeric]{Numeric}: Lower 95\% \href{confint}{confidence interval} for \code{sii}}
-\item{sii_uci_95}{\link[=numeric]{Numeric}: Upper 95\% \href{confint}{confidence interval} for \code{sii}}
+\item{sii_lci_95}{\link[=numeric]{Numeric}: Lower 95\% confidence interval for \code{sii}}
+\item{sii_uci_95}{\link[=numeric]{Numeric}: Upper 95\% confidence interval for \code{sii}}
 }
 }
 \description{
@@ -67,9 +67,9 @@ For example, the first 20\%, quintile 1, is placed at 0.1 (or 10\%)
 \item Compute inverse variance of a binomial proportion to use as weighting
 for each subgroup. For deprivation quintile \emph{i}, its weighting \eqn{w_i} is
 calculated from its early diagnosis proportion \eqn{p_i}, and count of staged
-cases \eqn{n_i}:
+cases \eqn{n_i} as:
 
-\deqn{w_i = n_i / (p_i(1 - p_i))}
+\deqn{w_i = \frac{n_i}{p_i(1 - p_i)}}
 
 \item Build the weighted linear regression models for each group specified in
 \code{by}, through applying helper function \code{\link[=fit_sii]{fit_sii()}}. The linear model uses

@@ -37,6 +37,8 @@
 #' @return
 #' A linear model ([lm]) object where the Slope Index of Inequality is the
 #' coefficient of the `sii_x` variable.
+#'
+#' @importFrom stats as.formula lm
 fit_sii <- function(ed_data,
                     ed_prop_col,
                     sii_x_col = "sii_x",

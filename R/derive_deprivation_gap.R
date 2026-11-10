@@ -16,9 +16,9 @@
 #' \item Compute inverse variance of a binomial proportion to use as weighting
 #' for each subgroup. For deprivation quintile _i_, its weighting \eqn{w_i} is
 #' calculated from its early diagnosis proportion \eqn{p_i}, and count of staged
-#' cases \eqn{n_i}:
+#' cases \eqn{n_i} as:
 #'
-#' \deqn{w_i = n_i / (p_i(1 - p_i))}
+#' \deqn{w_i = \frac{n_i}{p_i(1 - p_i)}}
 #'
 #' \item Build the weighted linear regression models for each group specified in
 #' `by`, through applying helper function [fit_sii()]. The linear model uses
@@ -64,8 +64,8 @@
 #'    coefficients of `sii_model`}
 #'   \item{sii}{[Numeric]: SII value, taken as the gradient of the `sii_model`}
 #'   \item{sii_std_err}{[Numeric]: Standard error of `sii`}
-#'   \item{sii_lci_95}{[Numeric]: Lower 95% [confidence interval](confint) for `sii`}
-#'   \item{sii_uci_95}{[Numeric]: Upper 95% [confidence interval](confint) for `sii`}
+#'   \item{sii_lci_95}{[Numeric]: Lower 95% confidence interval for `sii`}
+#'   \item{sii_uci_95}{[Numeric]: Upper 95% confidence interval for `sii`}
 #' }
 #'
 #' @examples
@@ -91,6 +91,7 @@
 #' @importFrom dplyr mutate arrange all_of
 #' @importFrom tidyr nest
 #' @importFrom purrr map map_dbl
+#' @importFrom stats confint
 derive_deprivation_gap <- function(ed_data,
                                    by,
                                    ed_prop_col,

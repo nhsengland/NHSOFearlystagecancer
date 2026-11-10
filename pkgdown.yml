@@ -1,0 +1,9 @@
+pandoc: 3.8.3
+pkgdown: 2.2.1
+pkgdown_sha: ~
+articles:
+  explain-SII: explain-SII.html
+last_built: 2026-11-10T14:00Z
+urls:
+  reference: https://nhsengland.github.io/NHSOFearlystagecancer/reference
+  article: https://nhsengland.github.io/NHSOFearlystagecancer/articles

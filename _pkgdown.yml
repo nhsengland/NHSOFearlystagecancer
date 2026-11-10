@@ -1,0 +1,5 @@
+url: https://nhsengland.github.io/NHSOFearlystagecancer/
+template:
+  bootstrap: 5
+  math-rendering: mathjax
+

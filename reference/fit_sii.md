@@ -1,10 +1,11 @@
-# Fits the SII's weighted least squares regression model
+# Fits an individual SII model
 
 A wrapper around [`lm()`](https://rdrr.io/r/stats/lm.html) intended as a
 helper function for
-[`derive_deprivation_gap()`](https://nhsengland.github.io/NHSOFearlystagecancer/reference/derive_deprivation_gap.md).
+[`derive_sii()`](https://nhsengland.github.io/NHSOFearlystagecancer/reference/derive_sii.md).
 See that function for details on the scaled deprivation quintile and
-weighting. The SII is the gradient of line.
+weighting. This creates a regression model through weighted least
+squares, and the SII is the resulting gradient of line.
 
 ## Usage
 

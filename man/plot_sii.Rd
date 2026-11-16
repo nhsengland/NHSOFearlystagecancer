@@ -4,14 +4,14 @@
 \alias{plot_sii}
 \title{Add SII plots to SII results}
 \usage{
-plot_sii(sii_tbl, by)
+plot_sii(sii_tbl, id)
 }
 \arguments{
 \item{sii_tbl}{A data frame returned by \code{\link[=derive_sii]{derive_sii()}}. Must contain the
 columns \code{data} (nested deprivation-quintile data) and \code{sii_model}
 (fitted weighted regression model).}
 
-\item{by}{Character string giving the column to use as the plot title.}
+\item{id}{Character string giving the column to use as the plot title.}
 }
 \value{
 The input data frame with an additional \code{plot} \link{list} column containing one
@@ -50,7 +50,7 @@ example_result <- example_df |>
     ed_denom_col = "ed_denom",
     depr_col = "deprivation"
   ) |>
-  plot_sii(by = "org_code")
+  plot_sii(id = "org_code")
 
 # View the generated plot
 example_result$plot[[1]]

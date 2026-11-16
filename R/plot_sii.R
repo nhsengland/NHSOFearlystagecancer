@@ -16,7 +16,7 @@
 #' @param sii_tbl A data frame returned by [derive_sii()]. Must contain the
 #'   columns `data` (nested deprivation-quintile data) and `sii_model`
 #'   (fitted weighted regression model).
-#' @param by Character string giving the column to use as the plot title.
+#' @param id Character string giving the column to use as the plot title.
 #'
 #' @return
 #' The input data frame with an additional `plot` [list] column containing one
@@ -46,11 +46,11 @@
 #'     ed_denom_col = "ed_denom",
 #'     depr_col = "deprivation"
 #'   ) |>
-#'   plot_sii(by = "org_code")
+#'   plot_sii(id = "org_code")
 #'
 #' # View the generated plot
 #' example_result$plot[[1]]
-plot_sii <- function(sii_tbl, by) {
+plot_sii <- function(sii_tbl, id) {
 
   all_ed_prop <- unlist(purrr::map(sii_tbl$data, "ed_prop")) * 100
   all_ed_denom <- unlist(purrr::map(sii_tbl$data, "ed_denom"))
@@ -65,7 +65,7 @@ plot_sii <- function(sii_tbl, by) {
         list(
           data,
           sii_model,
-          .data[[by]]
+          .data[[id]]
         ),
         function(dat, mod, group_name) {
 

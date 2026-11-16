@@ -25,7 +25,7 @@ other tools.
 
 ## Installation
 
-You can install the development version of NHSOFearlystagecancer from [GitHub](https://github.com/) with:
+You can install the development version of NHSOFearlystagecancer from [GitHub/nhsengland/NHSOFearlystagecancer](https://github.com/nhsengland/NHSOFearlystagecancer/) with:
 
 ``` r
 # install.packages("pak")

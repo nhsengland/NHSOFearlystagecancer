@@ -14,7 +14,8 @@ or as an example for translating into other tools.
 ## Installation
 
 You can install the development version of NHSOFearlystagecancer from
-[GitHub](https://github.com/) with:
+[GitHub/nhsengland/NHSOFearlystagecancer](https://github.com/nhsengland/NHSOFearlystagecancer/)
+with:
 
 ``` r
 # install.packages("pak")

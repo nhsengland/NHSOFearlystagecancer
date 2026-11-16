@@ -1,8 +1,9 @@
-#' Fits the SII's weighted least squares regression model
+#' Fits an individual SII model
 #'
 #' A wrapper around [lm()] intended as a helper function for
 #' [derive_sii()]. See that function for details on the scaled
-#' deprivation quintile and weighting. The SII is the gradient of line.
+#' deprivation quintile and weighting. This creates a regression model through
+#' weighted least squares, and the SII is the resulting gradient of line.
 #'
 #' @details
 #'

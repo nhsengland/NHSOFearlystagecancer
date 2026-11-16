@@ -2,7 +2,7 @@
 % Please edit documentation in R/fit_sii.R
 \name{fit_sii}
 \alias{fit_sii}
-\title{Fits the SII's weighted least squares regression model}
+\title{Fits an individual SII model}
 \usage{
 fit_sii(
   ed_data,
@@ -30,7 +30,8 @@ coefficient of the \code{sii_x} variable.
 \description{
 A wrapper around \code{\link[=lm]{lm()}} intended as a helper function for
 \code{\link[=derive_sii]{derive_sii()}}. See that function for details on the scaled
-deprivation quintile and weighting. The SII is the gradient of line.
+deprivation quintile and weighting. This creates a regression model through
+weighted least squares, and the SII is the resulting gradient of line.
 }
 \details{
 Fit a line of the form

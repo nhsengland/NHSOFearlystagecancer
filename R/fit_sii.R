@@ -1,7 +1,7 @@
 #' Fits the SII's weighted least squares regression model
 #'
 #' A wrapper around [lm()] intended as a helper function for
-#' [derive_deprivation_gap()]. See that function for details on the scaled
+#' [derive_sii()]. See that function for details on the scaled
 #' deprivation quintile and weighting. The SII is the gradient of line.
 #'
 #' @details

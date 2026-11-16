@@ -1,8 +1,8 @@
 Package: NHSOFearlystagecancer
-Title: What the Package Does (One Line, Title Case)
+Title: Slope Index of Inequality example code for NHS Oversight Framework
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
+    person("David", "Foord", , "david.foord1@nhs.net", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8

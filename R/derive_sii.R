@@ -1,9 +1,12 @@
 #' Create Slope Index of Inequality (SII) for Deprivation Gap metric
 #'
 #' Create the deprivation gap, a percentage point difference in early diagnosis
-#' (ED) proportion, between the most and least deprived extremes. This can be
-#' applied across any number of other factors as specified with the `by`
-#' argument e.g., across ICBs and reporting period.
+#' (ED) proportion, between the most and least deprived extremes as a Slope
+#' Index of Inequality. This can be applied across any number of other factors
+#' as specified with the `by` argument e.g., across ICBs and reporting period.
+#' Note that the input early diagnosis proportion, and the output SII
+#' proportions, are on the scale of 0 to 1, so you will want to multiply the
+#' output `sii` by 100 for most presentation purposes.
 #'
 #' @details
 #' The calculations are done as follows:
@@ -20,6 +23,9 @@
 #'
 #' \deqn{w_i = \frac{n_i}{p_i(1 - p_i)}}
 #'
+#' Note the reason early diagnosis is required as a proportion between 0 and 1
+#' is for flow in calculating this weighting.
+#'
 #' \item Build the weighted linear regression models for each group specified in
 #' `by`, through applying helper function [fit_sii()]. The linear model uses
 #' scaled deprivation quintile predicting early diagnosis proportion, weighted
@@ -30,22 +36,24 @@
 #' entire deprivation gap.
 #' }
 #'
-#' @param ed_data A data.frame with columns containing:
-#'  - Numeric early diagnosis proportion.
-#'  - Integer denominator of early diagnosis proportion, or number of staged
-#'  cases.
-#'  - String deprivation quintile.
+#' @param ed_data A [data.frame] with columns containing:
+#'  - The [numeric] early diagnosis proportion on the scale of 0 to 1.
+#'  - The [integer] number of staged cases, the denominator of early diagnosis proportion.
+#'  - The [character] string deprivation quintile.
 #'  - Any other columns to group the data by.
 #'
-#' @param by A character vector naming columns in `ed_data` to group the data
+#' @param by A [character] vector naming columns in `ed_data` to group the data
 #'   by, expected to be the reporting period and the geography.
 #'
-#' @param ed_prop_col String name of column in `ed_data` for the early diagnosis
-#'  proportion.
-#' @param ed_denom_col String name of column in `ed_data` for the early
-#'   diagnosis proportion denominator i.e., number of staged cases.
-#' @param depr_col String name of column in `ed_data` specifying deprivation
-#'   quintiles across which to measure inequality.
+#' @param ed_prop_col The [character] string name of the column in `ed_data` for
+#'   the early diagnosis proportion.
+#' @param ed_denom_col The [character] string name of the column in `ed_data`
+#'   for the early diagnosis proportion denominator i.e., number of staged
+#'   cases.
+#' @param depr_col The [character] string name of the column in `ed_data`
+#'   specifying deprivation quintiles across which to measure inequality. The
+#'   required labels are "1 - most deprived", "2", "3", "4", and "5 - least
+#'   deprived".
 #'
 #' @return A data.frame with all columns specified in `by`, as well as values
 #'   for the columns below for each of the groupings across `by`. This function
@@ -68,35 +76,37 @@
 #'   \item{sii_uci_95}{[Numeric]: Upper 95% confidence interval for `sii`}
 #' }
 #'
+#' @seealso [score_sii()] to follow with calculating the NHSOF group score.
+#'
 #' @examples
 #' example_df <- data.frame(
 #'   date = rep(as.Date("2026-02-01"), 5),
 #'   icb_code = rep("ABC", 5),
-#'   deprivation_quintile = c("1 - most deprived", "2", "3", "4", "5 - least deprived"),
+#'   deprivation = c("1 - most deprived", "2", "3", "4", "5 - least deprived"),
 #'   ed_prop = c(0.55, 0.58, 0.595, 0.606, 0.619),
 #'   ed_denom = c(39546, 43663, 48796, 51117, 50739)
 #' )
 #'
-#' example_gaps <- derive_deprivation_gap(
+#' example_result <- derive_sii(
 #'   example_df,
 #'   by = c("date", "icb_code"),
 #'   ed_prop_col = "ed_prop",
 #'   ed_denom_col = "ed_denom",
-#'   depr_col = "deprivation_quintile"
+#'   depr_col = "deprivation"
 #' )
 #'
-#' example_gaps[1, "sii"]
+#' example_result[1, "sii"]
 #'
 #' @export
-#' @importFrom dplyr mutate arrange all_of
+#' @importFrom dplyr mutate arrange all_of .data
 #' @importFrom tidyr nest
 #' @importFrom purrr map map_dbl
 #' @importFrom stats confint
-derive_deprivation_gap <- function(ed_data,
-                                   by,
-                                   ed_prop_col,
-                                   ed_denom_col,
-                                   depr_col) {
+derive_sii <- function(ed_data,
+                       by,
+                       ed_prop_col,
+                       ed_denom_col,
+                       depr_col) {
   # 0. Validation ----
 
   stopifnot( is.data.frame(ed_data) )
@@ -112,6 +122,14 @@ derive_deprivation_gap <- function(ed_data,
 
   stopifnot( is.character(depr_col) )
   stopifnot( depr_col %in% names(ed_data) )
+
+  stopifnot( is.numeric(ed_data[[ed_prop_col]]) )
+
+  if ( !all(ed_data[[ed_prop_col]] >= 0 & ed_data[[ed_prop_col]] <= 1) ) {
+    stop("Early diagnosis proportions must be on the 0 to 1 scale")
+  }
+
+  stopifnot( is.numeric(ed_data[[ed_denom_col]]))
 
   # 1. Apply scaled SII x-values ----
 
@@ -154,7 +172,8 @@ derive_deprivation_gap <- function(ed_data,
   # Working with list columns to store more complex objects:
 
   # Collapse data for each grouping into a list column `data`
-  # Create a list column of a linear model per grouping, fit on its data
+  # Create a list column of a linear model per grouping, fit on its data with
+  # fit_sii()
 
   ed_data <- ed_data |>
     nest(.by = all_of(by)) |>

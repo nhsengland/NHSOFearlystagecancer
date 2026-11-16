@@ -29,7 +29,7 @@ coefficient of the \code{sii_x} variable.
 }
 \description{
 A wrapper around \code{\link[=lm]{lm()}} intended as a helper function for
-\code{\link[=derive_deprivation_gap]{derive_deprivation_gap()}}. See that function for details on the scaled
+\code{\link[=derive_sii]{derive_sii()}}. See that function for details on the scaled
 deprivation quintile and weighting. The SII is the gradient of line.
 }
 \details{
